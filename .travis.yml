@@ -12,6 +12,9 @@ matrix:
       - jdk: oraclejdk7
         os: linux
         env: PROJ=chilitags OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=cuda OS=linux-x86_64
 
       - os: osx
         env: PROJ=artoolkitplus OS=macosx-x86_64
@@ -19,6 +22,8 @@ matrix:
         env: PROJ=caffe OS=macosx-x86_64
       - os: osx
         env: PROJ=chilitags OS=macosx-x86_64
+      - os: osx
+        env: PROJ=cuda OS=macosx-x86_64
 before_install:
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
 script:
