@@ -11,38 +11,144 @@ matrix:
         env: PROJ=artoolkitplus OS=linux-x86
       - jdk: oraclejdk7
         os: linux
+        env: PROJ=caffe OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=chilitags OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=cuda OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=ffmpeg OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=fftw OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=flandmark OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=gsl OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=leptonica OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=libdc1394 OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=libfreenect OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=llvm OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=mxnet OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
         env: PROJ=opencv OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=tensorflow OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=tesseract OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=videoinput OS=linux-x86
 
 ## Linux x86-64
 
-#      - jdk: oraclejdk7
-#        os: linux
-#        env: PROJ=artoolkitplus OS=linux-x86_64
-#      - jdk: oraclejdk7
-#        os: linux
-#        env: PROJ=caffe OS=linux-x86_64
-#      - jdk: oraclejdk7
-#        os: linux
-#        env: PROJ=chilitags OS=linux-x86_64
-#      - jdk: oraclejdk7
-#        os: linux
-#        env: PROJ=cuda OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=artoolkitplus OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=caffe OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=chilitags OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=cuda OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=ffmpeg OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=fftw OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=flandmark OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=gsl OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=leptonica OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=libdc1394 OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=libfreenect OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=llvm OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=mxnet OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=opencv OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=tensorflow OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=tesseract OS=linux-x86_64
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=videoinput OS=linux-x86_64
 
 ### OSX
 
-#      - os: osx
-#        env: PROJ=artoolkitplus OS=macosx-x86_64
-#      - os: osx
-#        env: PROJ=caffe OS=macosx-x86_64
-#      - os: osx
-#        env: PROJ=chilitags OS=macosx-x86_64
-#      - os: osx
-#        env: PROJ=cuda OS=macosx-x86_64
+      - os: osx
+        env: PROJ=artoolkitplus OS=macosx-x86_64
+      - os: osx
+        env: PROJ=caffe OS=macosx-x86_64
+      - os: osx
+        env: PROJ=chilitags OS=macosx-x86_64
+      - os: osx
+        env: PROJ=cuda OS=macosx-x86_64
+      - os: osx
+        env: PROJ=ffmpeg OS=macosx-x86_64
+      - os: osx
+        env: PROJ=fftw OS=macosx-x86_64
+      - os: osx
+        env: PROJ=flandmark OS=macosx-x86_64
+      - os: osx
+        env: PROJ=gsl OS=macosx-x86_64
+      - os: osx
+        env: PROJ=leptonica OS=macosx-x86_64
+      - os: osx
+        env: PROJ=libdc1394 OS=macosx-x86_64
+      - os: osx
+        env: PROJ=libfreenect OS=macosx-x86_64
+      - os: osx
+        env: PROJ=llvm OS=macosx-x86_64
+      - os: osx
+        env: PROJ=mxnet OS=macosx-x86_64
       - os: osx
         env: PROJ=opencv OS=macosx-x86_64
+      - os: osx
+        env: PROJ=tensorflow OS=macosx-x86_64
+      - os: osx
+        env: PROJ=tesseract OS=macosx-x86_64
+      - os: osx
+        env: PROJ=videoinput OS=macosx-x86_64
+
 before_install:
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
    - |
