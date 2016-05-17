@@ -34,7 +34,7 @@ before_install:
       if [ "$OS" == "linux-x86" ]; then
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib
+        sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
       fi
 install:
    - ./cppbuild.sh -platform $OS install $PROJ
