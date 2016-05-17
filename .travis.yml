@@ -30,6 +30,12 @@ matrix:
         env: PROJ=cuda OS=macosx-x86_64
 before_install:
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
+   - |
+      if [ "$OS" == "linux-x86" ]; then
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+        sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
+      fi
 install:
    - ./cppbuild.sh -platform $OS install $PROJ
 script:
