@@ -3,6 +3,18 @@ sudo: required
 dist: trusty
 matrix:
    include:
+
+## Linux x86
+
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=artoolkitplus OS=linux-x86
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=opencv OS=linux-x86
+
+## Linux x86-64
+
 #      - jdk: oraclejdk7
 #        os: linux
 #        env: PROJ=artoolkitplus OS=linux-x86_64
@@ -15,10 +27,11 @@ matrix:
 #      - jdk: oraclejdk7
 #        os: linux
 #        env: PROJ=cuda OS=linux-x86_64
-
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=artoolkitplus OS=linux-x86
+        env: PROJ=opencv OS=linux-x86_64
+
+### OSX
 
 #      - os: osx
 #        env: PROJ=artoolkitplus OS=macosx-x86_64
@@ -28,6 +41,8 @@ matrix:
 #        env: PROJ=chilitags OS=macosx-x86_64
 #      - os: osx
 #        env: PROJ=cuda OS=macosx-x86_64
+      - os: osx
+        env: PROJ=opencv OS=macosx-x86_64
 before_install:
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
    - |
