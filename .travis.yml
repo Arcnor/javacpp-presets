@@ -16,6 +16,10 @@ matrix:
         os: linux
         env: PROJ=cuda OS=linux-x86_64
 
+      - jdk: oraclejdk7
+        os: linux
+        env: PROJ=artoolkitplus OS=linux-x86
+
       - os: osx
         env: PROJ=artoolkitplus OS=macosx-x86_64
       - os: osx
