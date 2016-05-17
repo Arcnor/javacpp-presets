@@ -29,7 +29,7 @@ before_install:
 install:
    - ./cppbuild.sh -platform $OS install $PROJ
 script:
-   - mvn install -Djavacpp.platform $OS -pl $PROJ
+   - mvn install -Djavacpp.platform=$OS -pl $PROJ
 cache:
    directories:
       - $HOME/.m2
