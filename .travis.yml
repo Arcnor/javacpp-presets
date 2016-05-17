@@ -26,8 +26,10 @@ matrix:
         env: PROJ=cuda OS=macosx-x86_64
 before_install:
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
-script:
+install:
    - ./cppbuild.sh -platform $OS install $PROJ
+script:
+   - mvn install -Djavacpp.platform $OS -pl $PROJ
 cache:
    directories:
       - $HOME/.m2
