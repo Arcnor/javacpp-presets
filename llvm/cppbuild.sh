@@ -29,17 +29,21 @@ case $PLATFORM in
 esac
 
 LLVM_VERSION=3.9.1
-download http://llvm.org/releases/$LLVM_VERSION/llvm-$LLVM_VERSION.src.tar.xz llvm-$LLVM_VERSION.src.tar.xz
-download http://llvm.org/releases/$LLVM_VERSION/cfe-$LLVM_VERSION.src.tar.xz cfe-$LLVM_VERSION.src.tar.xz
+SRC_LLVM="llvm-$LLVM_VERSION.src.tar.xz"
+SRC_CFE="cfe-$LLVM_VERSION.src.tar.xz"
+download http://llvm.org/releases/$LLVM_VERSION/$SRC_LLVM $SRC_LLVM
+download http://llvm.org/releases/$LLVM_VERSION/$SRC_CFE $SRC_CFE
 
 mkdir -p $PLATFORM
 cd $PLATFORM
 INSTALL_PATH=`pwd`
-tar xvf ../llvm-$LLVM_VERSION.src.tar.xz
+echo "Extracting $SRC_LLVM"
+tar xf ../$SRC_LLVM
 cd llvm-$LLVM_VERSION.src
 mkdir -p build tools
 cd tools
-tar xvf ../../../cfe-$LLVM_VERSION.src.tar.xz
+echo "Extracting $SRC_CFE"
+tar xf ../../../$SRC_CFE
 rm -Rf clang
 mv cfe-$LLVM_VERSION.src clang
 cd ../build

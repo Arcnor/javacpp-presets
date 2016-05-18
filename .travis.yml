@@ -11,10 +11,7 @@ matrix:
         env: PROJ=artoolkitplus OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=caffe OS=linux-x86
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=chilitags OS=linux-x86
+        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=linux-x86
       - jdk: oraclejdk7
         os: linux
         env: PROJ=cuda OS=linux-x86
@@ -26,13 +23,10 @@ matrix:
         env: PROJ=fftw OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=flandmark OS=linux-x86
-      - jdk: oraclejdk7
-        os: linux
         env: PROJ=gsl OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=leptonica OS=linux-x86
+        env: PROJ=(leptonica tesseract) OS=linux-x86
       - jdk: oraclejdk7
         os: linux
         env: PROJ=libdc1394 OS=linux-x86
@@ -44,16 +38,7 @@ matrix:
         env: PROJ=llvm OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=mxnet OS=linux-x86
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=opencv OS=linux-x86
-      - jdk: oraclejdk7
-        os: linux
         env: PROJ=tensorflow OS=linux-x86
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=tesseract OS=linux-x86
       - jdk: oraclejdk7
         os: linux
         env: PROJ=videoinput OS=linux-x86
@@ -65,10 +50,7 @@ matrix:
         env: PROJ=artoolkitplus OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=caffe OS=linux-x86_64
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=chilitags OS=linux-x86_64
+        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=cuda OS=linux-x86_64
@@ -80,13 +62,10 @@ matrix:
         env: PROJ=fftw OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=flandmark OS=linux-x86_64
-      - jdk: oraclejdk7
-        os: linux
         env: PROJ=gsl OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=leptonica OS=linux-x86_64
+        env: PROJ=(leptonica tesseract) OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=libdc1394 OS=linux-x86_64
@@ -98,16 +77,7 @@ matrix:
         env: PROJ=llvm OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=mxnet OS=linux-x86_64
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=opencv OS=linux-x86_64
-      - jdk: oraclejdk7
-        os: linux
         env: PROJ=tensorflow OS=linux-x86_64
-      - jdk: oraclejdk7
-        os: linux
-        env: PROJ=tesseract OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=videoinput OS=linux-x86_64
@@ -117,9 +87,7 @@ matrix:
       - os: osx
         env: PROJ=artoolkitplus OS=macosx-x86_64
       - os: osx
-        env: PROJ=caffe OS=macosx-x86_64
-      - os: osx
-        env: PROJ=chilitags OS=macosx-x86_64
+        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=macosx-x86_64
       - os: osx
         env: PROJ=cuda OS=macosx-x86_64
       - os: osx
@@ -127,11 +95,9 @@ matrix:
       - os: osx
         env: PROJ=fftw OS=macosx-x86_64
       - os: osx
-        env: PROJ=flandmark OS=macosx-x86_64
-      - os: osx
         env: PROJ=gsl OS=macosx-x86_64
       - os: osx
-        env: PROJ=leptonica OS=macosx-x86_64
+        env: PROJ=(leptonica tesseract) OS=macosx-x86_64
       - os: osx
         env: PROJ=libdc1394 OS=macosx-x86_64
       - os: osx
@@ -139,17 +105,12 @@ matrix:
       - os: osx
         env: PROJ=llvm OS=macosx-x86_64
       - os: osx
-        env: PROJ=mxnet OS=macosx-x86_64
-      - os: osx
-        env: PROJ=opencv OS=macosx-x86_64
-      - os: osx
         env: PROJ=tensorflow OS=macosx-x86_64
-      - os: osx
-        env: PROJ=tesseract OS=macosx-x86_64
       - os: osx
         env: PROJ=videoinput OS=macosx-x86_64
 
 before_install:
+   - export PYTHON_BIN_PATH=$(which python) # For tensorflow
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
    - |
       if [ "$OS" == "linux-x86" ]; then
@@ -157,10 +118,37 @@ before_install:
         sudo apt-get update
         sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
       fi
+   - |
+      if [ "$PROJ" == "libfreenect" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux"]; then
+          if [ "$OS" == "linux-x86" ]; then
+            sudo apt-get install libusb-1.0-0-dev:i386
+          else
+            sudo apt-get update
+            sudo apt-get install libusb-1.0-0-dev
+          fi
+        else
+          brew install libusb
+        fi
+      fi
+   - |
+      if [ "${PROJ[0]}" == "leptonica" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux"]; then
+          if [ "$OS" == "linux-x86-64" ]; then
+            sudo apt-get update
+          fi
+          sudo apt-get install nasm
+        else
+          brew install nasm
+        fi
+      fi
 install:
-   - ./cppbuild.sh -platform $OS install $PROJ
+   - ./cppbuild.sh -platform $OS install ${PROJ[@]}
 script:
-   - mvn install -Djavacpp.platform=$OS -pl $PROJ
+   - |
+    for proj in "${PROJ[@]}"; do
+      mvn install -Djavacpp.platform=$OS -pl $proj
+    done
 cache:
    directories:
       - $HOME/.m2
