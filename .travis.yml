@@ -11,7 +11,7 @@ matrix:
         env: PROJ=artoolkitplus OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=linux-x86
+        env: PROJ=opencv:chilitags:flandmark:mxnet:caffe OS=linux-x86
       - jdk: oraclejdk7
         os: linux
         env: PROJ=cuda OS=linux-x86
@@ -26,7 +26,7 @@ matrix:
         env: PROJ=gsl OS=linux-x86
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=(leptonica tesseract) OS=linux-x86
+        env: PROJ=leptonica:tesseract OS=linux-x86
       - jdk: oraclejdk7
         os: linux
         env: PROJ=libdc1394 OS=linux-x86
@@ -50,7 +50,7 @@ matrix:
         env: PROJ=artoolkitplus OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=linux-x86_64
+        env: PROJ=opencv:chilitags:flandmark:mxnet:caffe OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=cuda OS=linux-x86_64
@@ -65,7 +65,7 @@ matrix:
         env: PROJ=gsl OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
-        env: PROJ=(leptonica tesseract) OS=linux-x86_64
+        env: PROJ=leptonica:tesseract OS=linux-x86_64
       - jdk: oraclejdk7
         os: linux
         env: PROJ=libdc1394 OS=linux-x86_64
@@ -87,7 +87,7 @@ matrix:
       - os: osx
         env: PROJ=artoolkitplus OS=macosx-x86_64
       - os: osx
-        env: PROJ=(opencv chilitags flandmark mxnet caffe) OS=macosx-x86_64
+        env: PROJ=opencv:chilitags:flandmark:mxnet:caffe OS=macosx-x86_64
       - os: osx
         env: PROJ=cuda OS=macosx-x86_64
       - os: osx
@@ -97,7 +97,7 @@ matrix:
       - os: osx
         env: PROJ=gsl OS=macosx-x86_64
       - os: osx
-        env: PROJ=(leptonica tesseract) OS=macosx-x86_64
+        env: PROJ=leptonica:tesseract OS=macosx-x86_64
       - os: osx
         env: PROJ=libdc1394 OS=macosx-x86_64
       - os: osx
@@ -111,21 +111,29 @@ matrix:
 
 before_install:
    - export PYTHON_BIN_PATH=$(which python) # For tensorflow
+   - IFS=':' read -ra PROJ <<< "$PROJ"
    - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
    - |
-      if [ "$OS" == "linux-x86" ]; then
-        sudo dpkg --add-architecture i386
-        sudo apt-get update
-        sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
+      if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+        if [ "$OS" == "linux-x86" ]; then
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
+        else
+          sudo apt-get update
+          sudo apt-get install -q -y yasm nasm
+        fi
+      else
+        brew install yasm nasm
       fi
    - |
       if [ "$PROJ" == "libfreenect" ]; then
         if [ "$TRAVIS_OS_NAME" == "linux" ]; then
           if [ "$OS" == "linux-x86" ]; then
-            sudo apt-get install libusb-1.0-0-dev:i386
+            sudo apt-get install -q -y libusb-1.0-0-dev:i386
           else
             sudo apt-get update
-            sudo apt-get install libusb-1.0-0-dev
+            sudo apt-get install -q -y libusb-1.0-0-dev
           fi
         else
           brew install libusb
@@ -134,38 +142,9 @@ before_install:
    - |
       if [ "$PROJ" == "tensorflow" ]; then
         if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-          if [ "$OS" != "linux-x86" ]; then
-            sudo apt-get update
-          fi
-          sudo apt-get install swig
+          sudo apt-get install -q -y swig
         else
           brew install swig
-        fi
-      fi
-   - |
-      if [ "${PROJ[0]}" == "leptonica" ]; then
-        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-          if [ "$OS" == "linux-x86" ]; then
-            sudo apt-get install nasm:i386
-          else
-            sudo apt-get update
-            sudo apt-get install nasm
-          fi
-        else
-          brew install nasm
-        fi
-      fi
-   - |
-      if [ "$PROJ" == "ffmpeg" ]; then
-        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-          if [ "$OS" == "linux-x86" ]; then
-            sudo apt-get install nasm:i386
-          else
-            sudo apt-get update
-            sudo apt-get install nasm
-          fi
-        else
-          brew install nasm
         fi
       fi
 install:
