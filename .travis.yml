@@ -127,7 +127,7 @@ before_install:
         brew install yasm nasm
       fi
    - |
-      if [ "$PROJ" == "libfreenect" ]; then
+      if [ "$PROJ" == "libfreenect" ] || [ "$PROJ" == "libdc1394" ]; then
         if [ "$TRAVIS_OS_NAME" == "linux" ]; then
           if [ "$OS" == "linux-x86" ]; then
             sudo apt-get install -q -y libusb-1.0-0-dev:i386
@@ -151,6 +151,9 @@ before_install:
    - |
       if [ "${PROJ[0]}" == "opencv" ]; then
         if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+          if [ "$OS" == "linux-x86" ]; then
+            sudo apt-get install -q -y libglib2.0-0:i386 libglib2.0-dev:i386
+          fi
           sudo apt-get install -q -y libblas-dev
         fi
       fi
