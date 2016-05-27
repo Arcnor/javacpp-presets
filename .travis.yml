@@ -120,7 +120,7 @@ before_install:
       fi
    - |
       if [ "$PROJ" == "libfreenect" ]; then
-        if [ "$TRAVIS_OS_NAME" == "linux"]; then
+        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
           if [ "$OS" == "linux-x86" ]; then
             sudo apt-get install libusb-1.0-0-dev:i386
           else
@@ -132,12 +132,38 @@ before_install:
         fi
       fi
    - |
-      if [ "${PROJ[0]}" == "leptonica" ]; then
-        if [ "$TRAVIS_OS_NAME" == "linux"]; then
-          if [ "$OS" == "linux-x86-64" ]; then
+      if [ "$PROJ" == "tensorflow" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+          if [ "$OS" != "linux-x86" ]; then
             sudo apt-get update
           fi
-          sudo apt-get install nasm
+          sudo apt-get install swig
+        else
+          brew install swig
+        fi
+      fi
+   - |
+      if [ "${PROJ[0]}" == "leptonica" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+          if [ "$OS" == "linux-x86" ]; then
+            sudo apt-get install nasm:i386
+          else
+            sudo apt-get update
+            sudo apt-get install nasm
+          fi
+        else
+          brew install nasm
+        fi
+      fi
+   - |
+      if [ "$PROJ" == "ffmpeg" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+          if [ "$OS" == "linux-x86" ]; then
+            sudo apt-get install nasm:i386
+          else
+            sudo apt-get update
+            sudo apt-get install nasm
+          fi
         else
           brew install nasm
         fi
