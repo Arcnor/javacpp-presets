@@ -25,10 +25,15 @@ download http://www.leptonica.org/source/leptonica-$LEPTONICA_VERSION.tar.gz lep
 mkdir -p $PLATFORM
 cd $PLATFORM
 INSTALL_PATH=`pwd`
+echo "Extracting zlib"
 tar -xzvf ../$ZLIB.tar.gz
+echo "Extracting giflib"
 tar -xzvf ../$GIFLIB.tar.gz
+echo "Extracting libjpeg"
 tar -xzvf ../$LIBJPEG.tar.gz
+echo "Extracting libpng"
 tar -xzvf ../$LIBPNG.tar.gz
+echo "Extracting libtiff"
 tar -xzvf ../$LIBTIFF.tar.gz
 
 #patch old config.sub for aarch64 support

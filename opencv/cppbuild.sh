@@ -13,7 +13,9 @@ download https://github.com/Itseez/opencv_contrib/archive/$OPENCV_VERSION.tar.gz
 
 mkdir -p $PLATFORM
 cd $PLATFORM
+echo "Extracting opencv"
 tar -xzvf ../opencv-$OPENCV_VERSION.tar.gz
+echo "Extracting opencv-contrib"
 tar -xzvf ../opencv_contrib-$OPENCV_VERSION.tar.gz
 
 #patch dnn contrib module for aarch64

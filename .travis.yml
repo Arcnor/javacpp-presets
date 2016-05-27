@@ -118,7 +118,7 @@ before_install:
         if [ "$OS" == "linux-x86" ]; then
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -q -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
+          sudo apt-get install -q -y yasm:i386 nasm:i386 libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
         else
           sudo apt-get update
           sudo apt-get install -q -y yasm nasm
@@ -142,9 +142,16 @@ before_install:
    - |
       if [ "$PROJ" == "tensorflow" ]; then
         if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-          sudo apt-get install -q -y swig
+          sudo apt-get install -q -y swig python-numpy
         else
-          brew install swig
+          brew tap homebrew/python
+          brew install swig numpy
+        fi
+      fi
+   - |
+      if [ "${PROJ[0]}" == "opencv" ]; then
+        if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+          sudo apt-get install -q -y libblas-dev
         fi
       fi
 install:
